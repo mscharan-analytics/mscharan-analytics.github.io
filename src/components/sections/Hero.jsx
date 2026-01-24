@@ -177,7 +177,7 @@ const Hero = () => {
                                 ACTIVELY SEEKING OPPORTUNITIES
                             </div>
                             <p className="text-slate-400 text-sm leading-snug">
-                                Available for Senior Data Engineering & <br className="hidden sm:block" />BI Engineering , BizOPS and AI Engineering roles.
+                                Available for Senior Data Engineering , <br className="hidden sm:block" />BI Engineering , BizOPS and AI Engineering roles.
                             </p>
                         </div>
                     </div>
