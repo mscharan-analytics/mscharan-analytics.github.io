@@ -121,7 +121,7 @@ const Hero = () => {
             <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
                 {/* Left Content */}
-                <div className="text-center lg:text-left order-2 lg:order-1 flex flex-col items-center lg:items-start">
+                <div className="text-center lg:text-left order-1 lg:order-1 flex flex-col items-center lg:items-start pt-10 lg:pt-0">
 
                     {/* NEW: Blog / Article Ticker */}
                     <motion.div
@@ -218,7 +218,7 @@ const Hero = () => {
                 </div>
 
                 {/* Right Content: Solution Simulator */}
-                <div className="order-1 lg:order-2 flex justify-center perspective-1000 w-full mb-12 lg:mb-0">
+                <div className="order-2 lg:order-2 flex justify-center perspective-1000 w-full mb-12 lg:mb-0 mt-8 lg:mt-0">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, rotateY: 10 }}
                         animate={{ opacity: 1, scale: 1, rotateY: 0 }}

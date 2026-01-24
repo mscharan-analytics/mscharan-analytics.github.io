@@ -20,8 +20,8 @@ const About = () => {
                         <div className="h-px bg-slate-800 flex-grow"></div>
                     </div>
 
-                    <div className="grid md:grid-cols-5 gap-12 items-center">
-                        <div className="md:col-span-2 order-2 md:order-1">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
+                        <div className="md:col-span-2 order-1 md:order-1">
                             {/* Digital Avatar Frame */}
                             <div className="aspect-square bg-slate-800/50 rounded-2xl overflow-hidden shadow-2xl border border-slate-700 relative group flex items-center justify-center p-8">
                                 <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-purple-900/10 group-hover:from-blue-900/20 group-hover:to-purple-900/20 transition-all duration-500" />
@@ -52,7 +52,7 @@ const About = () => {
                             </div>
                         </div>
 
-                        <div className="md:col-span-3 order-1 md:order-2">
+                        <div className="md:col-span-3 order-2 md:order-2">
                             <h3 className="text-2xl font-bold text-white mb-4">
                                 Hello! I'm <span className="text-blue-400">{personalDetails.name}</span>.
                             </h3>
