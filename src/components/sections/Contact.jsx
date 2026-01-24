@@ -1,52 +1,89 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Github } from 'lucide-react';
+import { Mail, Linkedin, Github, Terminal, ArrowRight } from 'lucide-react';
 import { personalDetails } from '../../data/resumeData';
 
 const Contact = () => {
     return (
         <section id="contact" className="py-24 bg-slate-950 relative overflow-hidden">
-            {/* Background glow */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
-
-            <div className="container mx-auto px-6 relative z-10 text-center">
+            <div className="container mx-auto px-6 relative z-10">
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    className="max-w-2xl mx-auto"
+                    className="max-w-3xl mx-auto"
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Let's Work Together</h2>
-                    <p className="text-slate-400 text-lg mb-10">
-                        I'm currently open to new opportunities in Data Engineering and Analytics.
-                        Whether you have a question or just want to say hi, I'll try my best to get back to you!
-                    </p>
+                    {/* Terminal Window Design */}
+                    <div className="bg-slate-900/80 backdrop-blur-xl rounded-xl border border-slate-800 shadow-2xl overflow-hidden">
+                        {/* Terminal Bar */}
+                        <div className="bg-slate-950 px-4 py-3 flex items-center justify-between border-b border-slate-800">
+                            <div className="flex gap-2">
+                                <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                            </div>
+                            <div className="text-xs text-slate-500 font-mono">user@analytics-portfolio:~/contact</div>
+                            <div className="w-12"></div> {/* Spacer for balance */}
+                        </div>
 
-                    <motion.a
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        href={`mailto:${personalDetails.email}`}
-                        className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-full shadow-lg hover:shadow-blue-600/50 transition-all text-lg"
-                    >
-                        <Mail size={20} />
-                        Say Hello
-                    </motion.a>
+                        <div className="p-8 md:p-12 text-center">
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                            >
+                                <div className="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/20">
+                                    <Terminal size={32} className="text-blue-400" />
+                                </div>
+                                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-mono">
+                                    Initialize <span className="text-blue-400">Connection</span>
+                                </h2>
+                                <p className="text-slate-400 text-lg mb-8 max-w-lg mx-auto">
+                                    Ready to process new opportunities?
+                                    <br />
+                                    Initiate a handshake via email or social protocols.
+                                </p>
+                            </motion.div>
 
-                    <div className="mt-12 flex justify-center gap-8">
-                        {personalDetails.social.map((social, idx) => {
-                            const Icon = social.icon;
-                            return (
+                            <motion.div
+                                className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                transition={{ delay: 0.4 }}
+                            >
                                 <a
-                                    key={idx}
-                                    href={social.url}
-                                    className="text-slate-500 hover:text-white transition-colors"
-                                    target="_blank"
-                                    rel="noreferrer"
+                                    href={`mailto:${personalDetails.email}`}
+                                    className="group relative inline-flex items-center justify-center px-8 py-3 bg-blue-600 font-bold text-white rounded hover:bg-blue-500 transition-all font-mono w-full sm:w-auto overflow-hidden"
                                 >
-                                    <Icon size={24} />
+                                    <span className="relative z-10 flex items-center gap-2">
+                                        <Mail size={18} /> SEND_PACKET()
+                                    </span>
+                                    {/* Scanline effect on hover */}
+                                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                                 </a>
-                            );
-                        })}
+
+                                <div className="flex gap-4">
+                                    {personalDetails.social.map((social, idx) => {
+                                        const Icon = social.icon;
+                                        return (
+                                            <a
+                                                key={idx}
+                                                href={social.url}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="p-3 bg-slate-800 rounded border border-slate-700 text-slate-400 hover:text-white hover:border-blue-500/50 hover:bg-slate-800/80 transition-all group"
+                                            >
+                                                <Icon size={20} className="group-hover:scale-110 transition-transform" />
+                                            </a>
+                                        );
+                                    })}
+                                </div>
+                            </motion.div>
+
+                            <div className="mt-8 pt-8 border-t border-slate-800/50 text-slate-500 text-sm font-mono">
+                                <span className="animate-pulse">●</span> Awaiting Input...
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
             </div>
