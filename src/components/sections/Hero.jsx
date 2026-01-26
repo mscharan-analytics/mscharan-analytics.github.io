@@ -333,7 +333,7 @@ const Hero = () => {
                                 onClick={handleDeploy}
                                 className="w-full py-3 bg-white text-slate-900 font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-blue-50 transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn text-sm"
                             >
-                                Contact Me for Projects
+                                Contact Me to Build you Data Ecosystem
                                 <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                             </button>
                         </div>

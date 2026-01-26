@@ -3,7 +3,7 @@ import { Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
 export const personalDetails = {
     name: "Sricharan Mahavadi",
     role: "Data Engineering & Analytics Professional",
-    summary: "Analytics and Data Engineering professional with 4+ years delivering commercial insights and data products across healthcare and retail. Specialize in segmentation and targeting, marketing monetization, and end-to-end ETL/ELT from RDBMS to data warehousing, deploying production-grade pipelines and dashboards using Python/SQL on GCP/Azure.",
+    summary: "Data Engineering & Analytics professional with 4+ years of experience. I build production-grade ETL pipelines, scalable data warehouses, and actionable dashboards using Python, SQL, and Cloud platforms.Currently working on integrating AI Engineering into my data pipelines.",
     location: "San Francisco, CA (Open to Relocation)",
     phone: "+(617)-259-6784",
     email: "smahavadi.official@gmail.com",

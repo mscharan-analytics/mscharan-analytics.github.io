@@ -23,15 +23,16 @@ const About = () => {
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
                         <div className="md:col-span-2 order-1 md:order-1">
                             {/* Digital Avatar Frame */}
-                            <div className="aspect-square bg-slate-800/50 rounded-2xl overflow-hidden shadow-2xl border border-slate-700 relative group flex items-center justify-center p-8">
+                            <div className="aspect-square bg-slate-800/50 rounded-2xl p-4 shadow-2xl border border-slate-700 relative group">
                                 <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-purple-900/10 group-hover:from-blue-900/20 group-hover:to-purple-900/20 transition-all duration-500" />
 
-                                {/* Avatar Placeholder / Animation */}
-                                <div className="relative w-full h-full rounded-full border-4 border-slate-700/50 flex items-center justify-center bg-slate-900 overflow-hidden">
-                                    <User size={80} className="text-slate-600" />
-
-                                    {/* Scanning effect */}
-                                    <div className="absolute top-0 left-0 w-full h-1 bg-blue-500/50 shadow-[0_0_20px_rgba(59,130,246,0.5)] animate-[scan_4s_ease-in-out_infinite]"></div>
+                                {/* Avatar Image */}
+                                <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-slate-700/50">
+                                    <img
+                                        src="/profile.jpg"
+                                        alt="Profile"
+                                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                                    />
                                 </div>
 
                                 {/* Floating Tech Badges */}
