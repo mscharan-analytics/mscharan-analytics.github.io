@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Terminal, Database, Play, Cpu, Activity, Server, Zap, Layers, BarChart, ExternalLink, Globe, Briefcase } from 'lucide-react';
+import { ArrowRight, Terminal, Database, Play, Cpu, Activity, Server, Zap, Layers, BarChart, ExternalLink, Globe, Briefcase, Download } from 'lucide-react';
 import { personalDetails } from '../../data/resumeData';
 
 const Hero = () => {
@@ -208,8 +208,16 @@ const Hero = () => {
                             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                         </a>
                         <a
-                            href="#projects"
+                            href="/resume.pdf"
+                            download="Sricharan_Mahavadi_Resume.pdf"
                             className="w-full sm:w-auto px-8 py-3 bg-slate-800/80 hover:bg-slate-700 text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-all border border-slate-700 hover:border-blue-500/50"
+                        >
+                            <Download size={18} />
+                            Download Resume
+                        </a>
+                        <a
+                            href="#projects"
+                            className="w-full sm:w-auto px-8 py-3 bg-transparent hover:bg-slate-800/50 text-slate-300 hover:text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-all border border-transparent hover:border-slate-700"
                         >
                             <Terminal size={18} />
                             View Projects
