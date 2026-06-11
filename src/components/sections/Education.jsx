@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Calendar, Award } from 'lucide-react';
-import { education } from '../../data/resumeData';
+import { education, certifications } from '../../data/resumeData';
 
 const Education = () => {
   return (
@@ -93,9 +93,54 @@ const Education = () => {
             </motion.div>
           </div>
         </div>
+
+        {/* Certifications & Badges Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-20 max-w-6xl mx-auto"
+        >
+          <div className="flex items-center gap-3 mb-8">
+            <Award className="text-blue-500" size={24} />
+            <h3 className="text-2xl font-bold text-white font-mono">Professional Certifications</h3>
+            <div className="h-px bg-slate-800 flex-grow"></div>
+          </div>
+          
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {certifications.map((cert, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -5 }}
+                className="bg-slate-900/60 p-5 rounded-xl border border-slate-800/80 shadow-md flex flex-col justify-between hover:border-blue-500/30 transition-all duration-300 relative group"
+              >
+                <div className="absolute top-0 left-0 w-full h-[1.5px] bg-gradient-to-r from-blue-500 to-indigo-500 opacity-50 group-hover:opacity-100 transition-opacity" />
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-[9px] font-mono text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase tracking-wider">
+                      {cert.badge}
+                    </span>
+                    <span className="text-[10px] text-slate-500 font-mono">{cert.date}</span>
+                  </div>
+                  <h4 className="text-sm font-bold text-white leading-snug mb-2 font-sans group-hover:text-blue-400 transition-colors">
+                    {cert.title}
+                  </h4>
+                  <p className="text-slate-400 text-[11px] font-light leading-relaxed">
+                    {cert.details}
+                  </p>
+                </div>
+                <div className="text-[10px] text-slate-500 font-mono mt-4 pt-2 border-t border-slate-850 flex items-center justify-between">
+                  <span>Issuer:</span>
+                  <span className="text-slate-300 font-semibold">{cert.issuer}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
 export default Education;
+

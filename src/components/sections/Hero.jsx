@@ -1,353 +1,283 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Terminal, Database, Play, Cpu, Activity, Server, Zap, Layers, BarChart, ExternalLink, Globe, Briefcase, Download } from 'lucide-react';
+import { ArrowRight, Database, Cpu, Server, Zap, BarChart, ExternalLink, Globe, Briefcase, Download } from 'lucide-react';
 import { personalDetails } from '../../data/resumeData';
 
 const Hero = () => {
-    const [text, setText] = useState('');
-    const fullText = "Building Intelligence with Data...";
-    const [isTypingComplete, setIsTypingComplete] = useState(false);
-    const [showMatrix, setShowMatrix] = useState(true);
+    const roles = ["Data Pipelines", "Model Context Protocol", "Scalable Lakehouses", "AI Agent Integrations"];
+    const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+    const [typedText, setTypedText] = useState("");
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [typingSpeed, setTypingSpeed] = useState(80);
 
-    // Solution Simulator State
-    const [dataVolume, setDataVolume] = useState(30);
-    const [insightSpeed, setInsightSpeed] = useState(40);
+    // Multi-role typing effect
+    useEffect(() => {
+        const currentFullText = roles[currentRoleIndex];
+        let timer;
+
+        if (isDeleting) {
+            timer = setTimeout(() => {
+                setTypedText(prev => prev.slice(0, -1));
+                setTypingSpeed(40);
+            }, typingSpeed);
+        } else {
+            timer = setTimeout(() => {
+                setTypedText(currentFullText.slice(0, typedText.length + 1));
+                setTypingSpeed(80);
+            }, typingSpeed);
+        }
+
+        if (!isDeleting && typedText === currentFullText) {
+            timer = setTimeout(() => setIsDeleting(true), 1500); // Wait before deleting
+        } else if (isDeleting && typedText === "") {
+            setIsDeleting(false);
+            setCurrentRoleIndex(prev => (prev + 1) % roles.length);
+        }
+
+        return () => clearTimeout(timer);
+    }, [typedText, isDeleting, currentRoleIndex]);
+
+    // Recruiter Fit Evaluator State
+    const [infraNeeds, setInfraNeeds] = useState(60);
+    const [aiNeeds, setAiNeeds] = useState(40);
+    const [biNeeds, setBiNeeds] = useState(50);
     const [recommendation, setRecommendation] = useState({
-        title: "Standard ETL Pipeline",
-        desc: "A reliable foundation for your data needs.",
-        story: "I usually recommend starting here to establish clean data flows.",
-        icon: Database,
+        title: "Full-Stack Data Professional",
+        desc: "DE Infrastructure + AI Agents + BI Analytics",
+        story: "Highly qualified generalist. Sricharan designs and supports end-to-end data systems, linking low-level database architectures to AI orchestrations and stakeholder dashboards.",
+        icon: Briefcase,
         color: "text-blue-400",
-        bg: "bg-blue-500/20"
+        borderColor: "border-blue-500/30",
+        bg: "bg-blue-500/10",
+        bullet: "Optimizes cloud spend while automating business workflows."
     });
 
+    // Dynamic Recruiter Recommendation Logic based on slider inputs
     useEffect(() => {
-        let currentIndex = 0;
-        const interval = setInterval(() => {
-            if (currentIndex <= fullText.length) {
-                setText(fullText.slice(0, currentIndex));
-                currentIndex++;
-            } else {
-                clearInterval(interval);
-                setIsTypingComplete(true);
-                setTimeout(() => setShowMatrix(false), 2000);
-            }
-        }, 80);
-
-        return () => clearInterval(interval);
-    }, []);
-
-    // Dynamic Recommendation Logic
-    useEffect(() => {
-        const score = (parseInt(dataVolume) + parseInt(insightSpeed)) / 2;
-
-        if (score < 30) {
+        const infra = parseInt(infraNeeds);
+        const ai = parseInt(aiNeeds);
+        const bi = parseInt(biNeeds);
+        
+        if (ai >= infra && ai >= bi) {
             setRecommendation({
-                title: "Lean Data Pipeline",
-                desc: "Efficient and plenty fast to get started.",
-                story: "Perfect for early-stage startups or specific analysis tasks. We can build this quickly!",
-                icon: Layers,
+                title: "Data-Centric AI Platform Specialist",
+                desc: "MCP Connectors, Agentic Workflows & Advanced RAG",
+                story: "Sricharan bridges traditional database warehouses and LLM agent contexts, turning standard tables into active tools for Claude and Gemini.",
+                icon: Cpu,
+                color: "text-violet-400",
+                borderColor: "border-violet-500/30",
+                bg: "bg-violet-500/10",
+                bullet: "Author of open-source Snowflake & Postgres MCP servers."
+            });
+        } else if (infra >= ai && infra >= bi) {
+            setRecommendation({
+                title: "Enterprise Data Pipeline Engineer",
+                desc: "High-Throughput ETL, Lakehouses & Schema Governance",
+                story: "A proven backend expert. Sricharan builds governed pipelines that scale database performance under strict production SLA constraints.",
+                icon: Database,
                 color: "text-cyan-400",
-                bg: "bg-cyan-500/20"
-            });
-        } else if (score < 60) {
-            setRecommendation({
-                title: "Scalable Data Lakehouse",
-                desc: "Unified storage for all your analytics.",
-                story: "Great for growing teams. I'll help you unify your data so everyone is on the same page.",
-                icon: Server,
-                color: "text-blue-400",
-                bg: "bg-blue-500/20"
-            });
-        } else if (score < 85) {
-            setRecommendation({
-                title: "Real-time Streaming Grid",
-                desc: "Low-latency insights for instant action.",
-                story: "When every second counts. I can engineer a system that reacts faster than the competition.",
-                icon: Zap,
-                color: "text-purple-400",
-                bg: "bg-purple-500/20"
+                borderColor: "border-cyan-500/30",
+                bg: "bg-cyan-500/10",
+                bullet: "Ingested 10M+ daily records; processed 2TB/day pipelines."
             });
         } else {
             setRecommendation({
-                title: "Predictive AI Ecosystem",
-                desc: "Autonomous decision-making at scale.",
-                story: "The ultimate goal. Let's train models that anticipate your users' needs before they do.",
-                icon: Cpu,
-                color: "text-pink-400",
-                bg: "bg-pink-500/20"
+                title: "Business Intelligence & Value Analyst",
+                desc: "Tableau/Power BI Dashboards & Process Automations",
+                story: "Sricharan connects low-level schemas directly to business bottom lines, delivering automated dashboards that save operational costs and labor.",
+                icon: BarChart,
+                color: "text-amber-400",
+                borderColor: "border-amber-500/30",
+                bg: "bg-amber-500/10",
+                bullet: "Saved $1,000+/mo in nonprofit workflows; cut report latency."
             });
         }
-    }, [dataVolume, insightSpeed]);
+    }, [infraNeeds, aiNeeds, biNeeds]);
 
-    const handleDeploy = () => {
-        window.location.href = '#contact';
-    };
+    // Compute aggregate compatibility score based on Sricharan's actual capabilities
+    const totalWeight = parseInt(infraNeeds) + parseInt(aiNeeds) + parseInt(biNeeds);
+    const fitCompatibility = Math.round(
+        (parseInt(infraNeeds) * 98 + parseInt(aiNeeds) * 95 + parseInt(biNeeds) * 92) / 
+        (totalWeight || 1)
+    );
+
 
     return (
-        <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-36 pb-12 lg:pt-0 lg:pb-0">
-            {/* Matrix Data Rain Effect (Entrance) - Subtle */}
-            <AnimatePresence>
-                {showMatrix && (
+        <section id="home" className="relative min-h-screen flex items-center justify-center pt-28 pb-12 lg:pt-0 lg:pb-0">
+            <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+
+                {/* Left Content - Details */}
+                <div className="lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
+                    
+                    {/* Blog/Article Feature */}
                     <motion.div
-                        initial={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1 }}
-                        className="absolute inset-0 z-0 pointer-events-none flex justify-center gap-1 opacity-10"
-                    >
-                        {Array.from({ length: 20 }).map((_, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ y: -1000, opacity: 0 }}
-                                animate={{ y: 2000, opacity: 1 }}
-                                transition={{
-                                    duration: 3 + Math.random() * 2,
-                                    repeat: Infinity,
-                                    delay: Math.random() * 2,
-                                    ease: "linear"
-                                }}
-                                className="text-blue-500 font-mono text-xs hidden md:block"
-                                style={{ width: '20px' }}
-                            >
-                                {Array.from({ length: 50 }).map((_, j) => (
-                                    <div key={j} className="my-1">{Math.random() > 0.5 ? '1' : '0'}</div>
-                                ))}
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-
-                {/* Left Content */}
-                <div className="text-center lg:text-left order-1 lg:order-1 flex flex-col items-center lg:items-start pt-10 lg:pt-0">
-
-                    {/* NEW: Blog / Article Ticker */}
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
+                        initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="w-full max-w-lg mb-8"
+                        className="w-full max-w-lg mb-6"
                     >
-                        <a href="https://substack.com/" target="_blank" rel="noopener noreferrer" className="block group">
-                            <div className="bg-slate-900/50 backdrop-blur-md border border-slate-700/50 rounded-lg p-3 flex items-center justify-between hover:border-blue-500/30 transition-colors">
-                                <div className="flex items-center gap-3 overflow-hidden">
-                                    <div className="p-1.5 bg-blue-500/10 rounded-md text-blue-400 shrink-0">
-                                        <Globe size={14} />
-                                    </div>
-                                    <div className="flex flex-col text-left overflow-hidden">
-                                        <span className="text-[10px] text-blue-400 font-bold tracking-wider uppercase">Latest Insight</span>
-                                        <span className="text-sm text-slate-300 truncate group-hover:text-white transition-colors">
-                                            The Future of Enterprise AI Stacks: A Deep Dive
-                                        </span>
-                                    </div>
-                                </div>
-                                <ExternalLink size={14} className="text-slate-500 group-hover:text-blue-400 transition-colors ml-2 shrink-0" />
-                            </div>
+                        <a 
+                            href="https://github.com/mscharan-analytics" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="inline-flex items-center gap-2.5 bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-full px-4 py-1.5 transition-all group"
+                        >
+                            <Globe size={13} className="text-blue-400 animate-pulse" />
+                            <span className="text-xs text-slate-300 font-mono">
+                                Explore my open-source MCP connectors
+                            </span>
+                            <ArrowRight size={12} className="text-slate-500 group-hover:translate-x-1 transition-transform" />
                         </a>
                     </motion.div>
 
-                    {/* Updated Avatar Frame - Minimalist Professional */}
-                    <div className="flex items-center gap-6 mb-8 w-full max-w-lg justify-center lg:justify-start">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.5 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="relative w-24 h-24 shrink-0"
-                            onClick={handleDeploy}
-                        >
-                            <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
-                            {/* Abstract Geometric Avatar */}
-                            <div className="relative w-full h-full rounded-full border border-blue-400/30 overflow-hidden bg-slate-900 flex items-center justify-center">
-                                <div className="absolute inset-0 bg-gradient-to-tr from-slate-900 via-transparent to-blue-500/10"></div>
-                                {/* Center Node */}
-                                <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-lg rotate-45 shadow-[0_0_15px_rgba(59,130,246,0.5)] z-10"></div>
-                                {/* Orbiting Particles */}
-                                <div className="absolute inset-0 animate-[spin_10s_linear_infinite]">
-                                    <div className="absolute top-2 left-1/2 w-1.5 h-1.5 bg-blue-300 rounded-full"></div>
-                                    <div className="absolute bottom-4 right-4 w-1 h-1 bg-purple-400 rounded-full"></div>
-                                </div>
-                                <div className="absolute inset-0 border border-blue-500/20 rounded-full scale-75"></div>
-                            </div>
-                        </motion.div>
-
-                        {/* Explicit Hiring Signal */}
-                        <div className="text-left">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold mb-2">
-                                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
-                                ACTIVELY SEEKING OPPORTUNITIES
-                            </div>
-                            <p className="text-slate-400 text-sm leading-snug">
-                                Available for Senior Data Engineering , <br className="hidden sm:block" />BI Engineering , BizOPS and AI Engineering roles.
-                            </p>
-                        </div>
+                    {/* Hiring Signal Badge */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-6">
+                        <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                        OPEN FOR DATA & AI ENGINEER OPPORTUNITIES
                     </div>
 
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6 leading-tight">
-                        <span className="block text-slate-400 text-xl md:text-2xl font-mono mb-2 h-8">
-                            &gt; {text}<span className="animate-pulse">_</span>
-                        </span>
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400">
-                            {personalDetails.name}
-                        </span>
+                    {/* Name Headline */}
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-4 leading-tight">
+                        Hi, I'm <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-cyan-400">{personalDetails.name}</span>
                     </h1>
 
-                    <p className="text-slate-300 text-base md:text-lg max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed font-light">
+                    {/* Dynamic Typing Title */}
+                    <h2 className="text-xl sm:text-2xl font-mono text-slate-400 mb-6 h-8 flex items-center justify-center lg:justify-start">
+                        <span>Architecting <span className="text-blue-400 font-bold">{typedText}</span></span>
+                        <span className="w-1.5 h-5 bg-blue-500 ml-1.5 animate-pulse inline-block"></span>
+                    </h2>
+
+                    {/* Professional Summary */}
+                    <p className="text-slate-300 text-base sm:text-lg max-w-xl mb-8 leading-relaxed font-light">
                         {personalDetails.summary}
-                        <span className="block mt-4 text-sm text-slate-400 font-medium">
-                            I architect systems that turn raw enterprise data into competitive intelligence.
-                        </span>
                     </p>
 
+                    {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start w-full sm:w-auto">
                         <a
                             href="#contact"
-                            className="w-full sm:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-blue-600/25 group"
+                            className="w-full sm:w-auto px-7 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-blue-600/20 group"
                         >
-                            <Briefcase size={18} />
-                            Hiring? Let's Talk
-                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                            <Briefcase size={16} />
+                            Let's Connect
+                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                         </a>
                         <a
-                            href="/resume.pdf"
+                            href="resume.pdf"
                             download="Sricharan_Mahavadi_Resume.pdf"
-                            className="w-full sm:w-auto px-8 py-3 bg-slate-800/80 hover:bg-slate-700 text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-all border border-slate-700 hover:border-blue-500/50"
+                            className="w-full sm:w-auto px-7 py-3 bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-all"
                         >
-                            <Download size={18} />
+                            <Download size={16} />
                             Download Resume
-                        </a>
-                        <a
-                            href="#projects"
-                            className="w-full sm:w-auto px-8 py-3 bg-transparent hover:bg-slate-800/50 text-slate-300 hover:text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-all border border-transparent hover:border-slate-700"
-                        >
-                            <Terminal size={18} />
-                            View Projects
                         </a>
                     </div>
                 </div>
 
-                {/* Right Content: Solution Simulator */}
-                <div className="order-2 lg:order-2 flex justify-center perspective-1000 w-full mb-12 lg:mb-0 mt-8 lg:mt-0">
+                {/* Right Content - Interactive Candidate Profile Analyzer */}
+                <div className="lg:col-span-5 flex justify-center w-full mt-6 lg:mt-0">
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9, rotateY: 10 }}
-                        animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-                        transition={{ duration: 0.8 }}
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6 }}
                         className="relative w-full max-w-md"
                     >
-                        {/* Card Design */}
-                        <div className="bg-slate-900/95 backdrop-blur-xl rounded-2xl border border-slate-700 p-6 md:p-8 shadow-2xl relative overflow-hidden group">
-                            {/* Decorative Top Bar */}
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500"></div>
+                        {/* Glassmorphic Simulator Card */}
+                        <div className="bg-slate-900/70 backdrop-blur-md rounded-xl border border-slate-800 p-6 shadow-xl relative overflow-hidden">
+                            {/* Accent line */}
+                            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-500"></div>
 
                             <div className="mb-6 flex items-center justify-between">
-                                <div className="flex items-center gap-2 text-white font-bold tracking-wide text-sm md:text-base">
-                                    <Activity className="text-blue-500 animate-pulse" size={18} />
-                                    SOLUTION_SIMULATOR
+                                <div className="flex items-center gap-2 text-white font-semibold tracking-wide text-xs font-mono">
+                                    <Cpu className="text-blue-500 animate-pulse" size={14} />
+                                    RECRUITER_FIT_EVALUATOR
                                 </div>
-                                <div className="text-[10px] bg-slate-800 text-slate-400 px-2 py-1 rounded font-mono border border-slate-700">
-                                    INTERACTIVE
-                                </div>
+                                <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-mono border border-emerald-500/20 uppercase tracking-wider font-semibold">
+                                    Live Match
+                                </span>
                             </div>
 
                             {/* Sliders */}
-                            <div className="space-y-6 mb-8">
+                            <div className="space-y-4 mb-6">
                                 <div>
-                                    <div className="flex justify-between text-xs font-semibold text-slate-300 mb-2 uppercase tracking-wider">
-                                        Data Complexity
-                                        <span className="text-blue-400 font-mono">{dataVolume > 70 ? 'HIGH' : dataVolume > 30 ? 'MEDIUM' : 'LOW'}</span>
+                                    <div className="flex justify-between text-xs font-medium text-slate-300 mb-1 font-mono tracking-wider">
+                                        Data Infrastructure (DE)
+                                        <span className="text-cyan-400 font-mono font-bold">{infraNeeds}%</span>
                                     </div>
-                                    <div className="flex items-center gap-3">
-                                        <span className="text-[10px] text-slate-500 font-mono">Simple</span>
-                                        <input
-                                            type="range"
-                                            min="0"
-                                            max="100"
-                                            value={dataVolume}
-                                            onChange={(e) => setDataVolume(e.target.value)}
-                                            className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-gradient-to-tr [&::-webkit-slider-thumb]:from-blue-500 [&::-webkit-slider-thumb]:to-cyan-400 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-125 hover:bg-slate-700 transition-colors"
-                                        />
-                                        <span className="text-[10px] text-slate-500 font-mono">Complex</span>
-                                    </div>
+                                    <input
+                                        type="range"
+                                        min="10"
+                                        max="100"
+                                        value={infraNeeds}
+                                        onChange={(e) => setInfraNeeds(e.target.value)}
+                                        className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-cyan-400 [&::-webkit-slider-thumb]:rounded-full hover:bg-slate-700 transition-colors"
+                                    />
                                 </div>
                                 <div>
-                                    <div className="flex justify-between text-xs font-semibold text-slate-300 mb-2 uppercase tracking-wider">
-                                        Insight Velocity
-                                        <span className="text-purple-400 font-mono">{insightSpeed > 70 ? 'REAL-TIME' : insightSpeed > 30 ? 'DAILY' : 'BATCH'}</span>
+                                    <div className="flex justify-between text-xs font-medium text-slate-300 mb-1 font-mono tracking-wider">
+                                        AI & Agent Integration (LLM/MCP)
+                                        <span className="text-violet-400 font-mono font-bold">{aiNeeds}%</span>
                                     </div>
-                                    <div className="flex items-center gap-3">
-                                        <span className="text-[10px] text-slate-500 font-mono">Slow</span>
-                                        <input
-                                            type="range"
-                                            min="0"
-                                            max="100"
-                                            value={insightSpeed}
-                                            onChange={(e) => setInsightSpeed(e.target.value)}
-                                            className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-gradient-to-tr [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-400 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-125 hover:bg-slate-700 transition-colors"
-                                        />
-                                        <span className="text-[10px] text-slate-500 font-mono">Instant</span>
+                                    <input
+                                        type="range"
+                                        min="10"
+                                        max="100"
+                                        value={aiNeeds}
+                                        onChange={(e) => setAiNeeds(e.target.value)}
+                                        className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-violet-400 [&::-webkit-slider-thumb]:rounded-full hover:bg-slate-700 transition-colors"
+                                    />
+                                </div>
+                                <div>
+                                    <div className="flex justify-between text-xs font-medium text-slate-300 mb-1 font-mono tracking-wider">
+                                        BI & Business Analytics (ROI)
+                                        <span className="text-amber-400 font-mono font-bold">{biNeeds}%</span>
                                     </div>
+                                    <input
+                                        type="range"
+                                        min="10"
+                                        max="100"
+                                        value={biNeeds}
+                                        onChange={(e) => setBiNeeds(e.target.value)}
+                                        className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-amber-400 [&::-webkit-slider-thumb]:rounded-full hover:bg-slate-700 transition-colors"
+                                    />
                                 </div>
                             </div>
 
-                            {/* Dynamic Bar Graph */}
-                            <div className="mb-6 bg-slate-950/50 rounded-lg border border-slate-800 p-4 h-32 relative overflow-hidden flex items-end justify-between gap-1">
-                                <div className="absolute top-2 right-2 text-[10px] text-slate-500 font-mono flex items-center gap-1">
-                                    <BarChart size={10} /> ESTIMATED_THROUGHPUT
+                            {/* Candidate Match visual bar */}
+                            <div className="mb-6 bg-slate-950/40 rounded-lg border border-slate-800/80 p-3 flex flex-col gap-1.5">
+                                <div className="flex justify-between items-center text-[10px] text-slate-500 font-mono uppercase tracking-wider">
+                                    <span>Candidate Fit Score</span>
+                                    <span className="text-emerald-400 font-bold">{fitCompatibility}% Compatible</span>
                                 </div>
-                                {/* Bars */}
-                                {[0.2, 0.4, 0.6, 0.5, 0.7, 0.9, 0.8, 0.6, 0.8, 1.0].map((multiplier, i) => {
-                                    const baseHeight = ((parseInt(dataVolume) + parseInt(insightSpeed)) / 200) * 100;
-                                    const height = Math.min(100, Math.max(10, baseHeight * multiplier)); // Ensure min height
-                                    return (
-                                        <motion.div
-                                            key={i}
-                                            animate={{ height: `${height}%` }}
-                                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                                            className={`w-full rounded-t-sm ${height > 80 ? 'bg-pink-500/80' : height > 50 ? 'bg-purple-500/80' : 'bg-blue-500/80'}`}
-                                        />
-                                    );
-                                })}
+                                <div className="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
+                                    <motion.div 
+                                        className="bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-500 h-1.5" 
+                                        animate={{ width: `${fitCompatibility}%` }}
+                                        transition={{ type: "spring", stiffness: 100 }}
+                                    />
+                                </div>
                             </div>
 
-                            {/* Result Card */}
-                            <motion.div
-                                className={`p-4 rounded-xl border border-slate-700 bg-slate-950/50 mb-6 relative overflow-hidden transition-colors duration-300`}
-                                initial={false}
-                                animate={{
-                                    borderColor: recommendation.color.replace('text-', '') === 'blue-400' ? '#60A5FA' :
-                                        recommendation.color.replace('text-', '') === 'cyan-400' ? '#22D3EE' :
-                                            recommendation.color.replace('text-', '') === 'purple-400' ? '#C084FC' : '#F472B6'
-                                }}
-                            >
-                                <div className={`absolute top-0 right-0 p-2 opacity-10`}>
-                                    <recommendation.icon size={64} />
+                            {/* Dynamically Populated Candidate Pitch */}
+                            <div className={`p-4 rounded-lg border ${recommendation.borderColor} ${recommendation.bg} transition-all duration-300 relative overflow-hidden`}>
+                                <div className="absolute top-2 right-2 text-white/5 pointer-events-none">
+                                    <recommendation.icon size={56} />
                                 </div>
-
                                 <div className="relative z-10">
-                                    <div className="text-xs text-slate-500 font-mono mb-1">RECOMMENDATION</div>
-                                    <h3 className={`text-lg font-bold ${recommendation.color} mb-2 flex items-center gap-2`}>
-                                        <recommendation.icon size={18} />
+                                    <span className="text-[9px] text-slate-400 font-mono uppercase tracking-wider">Target Role Focus</span>
+                                    <h3 className={`text-base font-bold ${recommendation.color} flex items-center gap-2 mt-1 mb-1.5 font-mono`}>
+                                        <recommendation.icon size={16} />
                                         {recommendation.title}
                                     </h3>
-                                    <p className="text-sm text-slate-300 leading-relaxed mb-2">
-                                        "{recommendation.story}"
+                                    <p className="text-xs text-slate-300 leading-relaxed font-light mb-2">
+                                        {recommendation.story}
                                     </p>
-                                    <div className="text-xs text-slate-500 italic">
-                                        Note: {recommendation.desc}
+                                    
+                                    <div className="text-[10px] text-slate-400 font-mono block border-t border-white/5 pt-1.5 flex items-center gap-1">
+                                        <span className="text-emerald-400 font-bold">✔ Impact:</span>
+                                        <span className="truncate">{recommendation.bullet}</span>
                                     </div>
                                 </div>
-                            </motion.div>
-
-                            <button
-                                onClick={handleDeploy}
-                                className="w-full py-3 bg-white text-slate-900 font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-blue-50 transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(255,255,255,0.1)] group/btn text-sm"
-                            >
-                                Contact Me to Build you Data Ecosystem
-                                <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                            </button>
+                            </div>
                         </div>
-
-                        {/* Background Glow */}
-                        <div className="absolute -z-10 inset-0 bg-blue-500/10 blur-[80px] rounded-full"></div>
                     </motion.div>
                 </div>
             </div>

@@ -14,10 +14,10 @@ const ExperienceCard = ({ exp, index, isLeft }) => {
         >
             <div className="relative bg-slate-900/80 backdrop-blur-xl rounded-xl border border-blue-500/30 overflow-hidden group hover:border-blue-400 transition-colors duration-300 shadow-[0_0_20px_rgba(0,0,0,0.3)]">
                 {/* Tech Header */}
-                <div className="bg-slate-950/50 px-6 py-3 border-b border-blue-500/20 flex items-center justify-between">
+                <div className="bg-slate-950/50 px-6 py-3 border-b border-blue-500/10 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Activity size={16} className="text-blue-400" />
-                        <span className="text-xs font-mono text-blue-300">NODE_ID: {index.toString().padStart(3, '0')}</span>
+                        <Briefcase size={13} className="text-blue-400" />
+                        <span className="text-xs font-mono text-blue-300">Milestone 0{index + 1}</span>
                     </div>
                     <div className="flex gap-1">
                         <div className="w-2 h-2 rounded-full bg-red-500/50"></div>
@@ -44,7 +44,7 @@ const ExperienceCard = ({ exp, index, isLeft }) => {
                     <ul className="space-y-3 relative z-10">
                         {exp.description.map((desc, i) => (
                             <li key={i} className="text-slate-400 text-sm leading-relaxed flex items-start group/li">
-                                <span className="text-blue-500 mr-3 mt-1 font-mono text-xs opacity-50 shrink-0">&gt;</span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-blue-500/60 mr-3 mt-2 shrink-0"></span>
                                 <span>{desc}</span>
                             </li>
                         ))}
@@ -72,11 +72,11 @@ const Experience = () => {
                     viewport={{ once: true }}
                     className="mb-24 text-center"
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm font-mono mb-4">
-                        <Zap size={14} /> Career Trajectory
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-mono mb-4">
+                        <Briefcase size={12} /> Career History
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-                        Experience <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Timeline</span>
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+                        Professional <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Experience</span>
                     </h2>
                 </motion.div>
 

@@ -22,7 +22,7 @@ const Contact = () => {
                                 <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                                 <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
                             </div>
-                            <div className="text-xs text-slate-500 font-mono">user@analytics-portfolio:~/contact</div>
+                            <div className="text-xs text-slate-400 font-mono">communication_protocol.py</div>
                             <div className="w-12"></div> {/* Spacer for balance */}
                         </div>
 
@@ -35,13 +35,12 @@ const Contact = () => {
                                 <div className="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/20">
                                     <Terminal size={32} className="text-blue-400" />
                                 </div>
-                                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-mono">
-                                    Initialize <span className="text-blue-400">Connection</span>
+                                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                                    Get In <span className="text-blue-400">Touch</span>
                                 </h2>
-                                <p className="text-slate-400 text-lg mb-8 max-w-lg mx-auto">
-                                    Ready to process new opportunities?
-                                    <br />
-                                    Initiate a handshake via email or social protocols.
+                                <p className="text-slate-400 text-base mb-8 max-w-lg mx-auto font-light">
+                                    I am actively seeking Senior Data Engineering, Business Intelligence, and AI Engineering roles. 
+                                    Reach out to discuss opportunities or integrations.
                                 </p>
                             </motion.div>
 
@@ -56,7 +55,7 @@ const Contact = () => {
                                     className="group relative inline-flex items-center justify-center px-8 py-3 bg-blue-600 font-bold text-white rounded hover:bg-blue-500 transition-all font-mono w-full sm:w-auto overflow-hidden"
                                 >
                                     <span className="relative z-10 flex items-center gap-2">
-                                        <Mail size={18} /> SEND_PACKET()
+                                        <Mail size={16} /> Send Email
                                     </span>
                                     {/* Scanline effect on hover */}
                                     <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
@@ -80,8 +79,8 @@ const Contact = () => {
                                 </div>
                             </motion.div>
 
-                            <div className="mt-8 pt-8 border-t border-slate-800/50 text-slate-500 text-sm font-mono">
-                                <span className="animate-pulse">●</span> Awaiting Input...
+                             <div className="mt-8 pt-8 border-t border-slate-800/50 text-slate-500 text-xs font-mono">
+                                <span className="animate-pulse text-emerald-500">●</span> Ready for handshake
                             </div>
                         </div>
                     </div>

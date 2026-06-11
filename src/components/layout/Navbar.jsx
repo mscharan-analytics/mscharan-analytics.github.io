@@ -7,8 +7,12 @@ const navLinks = [
     { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
     { name: 'Skills', href: '#skills' },
+    { name: 'Education', href: '#education' },
+    { name: 'Interactive Lab', href: '#role-prism' },
     { name: 'Contact', href: '#contact' },
 ];
+
+
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);

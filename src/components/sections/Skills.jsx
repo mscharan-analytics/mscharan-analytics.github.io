@@ -35,7 +35,7 @@ const SkillCategory = ({ title, items, color, icon: Icon, delay }) => {
                             whileHover={{ scale: 1.05, y: -2 }}
                             className="relative"
                         >
-                            <div className={`px-4 py-2 rounded-md bg-slate-900/80 border border-white/10 text-xs md:text-sm font-medium text-slate-300 hover:text-white hover:border-blue-500/50 transition-all shadow-lg backdrop-blur-sm cursor-crosshair flex items-center gap-2 group/skill`}>
+                            <div className={`px-4 py-2 rounded-md bg-slate-900/80 border border-white/10 text-xs md:text-sm font-medium text-slate-300 hover:text-white hover:border-blue-500/50 transition-all shadow-lg backdrop-blur-sm cursor-default flex items-center gap-2 group/skill`}>
                                 <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${color}`}></div>
                                 {skill}
                             </div>
@@ -81,11 +81,11 @@ const Skills = () => {
                     viewport={{ once: true }}
                     className="text-center mb-20"
                 >
-                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-                        Technical <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Architecture</span>
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                        Core <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Expertise</span>
                     </h2>
-                    <p className="text-slate-400 max-w-2xl mx-auto font-mono text-sm">
-                        // INITIALIZING SKILL_MATRIX_V2.0... LOAD_COMPLETE
+                    <p className="text-slate-400 max-w-lg mx-auto text-sm font-light">
+                        A structured map of languages, platforms, and methodologies I leverage to engineer data systems and AI integrations.
                     </p>
                 </motion.div>
 

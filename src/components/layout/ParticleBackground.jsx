@@ -1,98 +1,22 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 const ParticleBackground = () => {
-    const canvasRef = useRef(null);
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        let animationFrameId;
-
-        const resizeCanvas = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        };
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        const particles = [];
-        const particleCount = Math.min(window.innerWidth / 10, 100); // Responsive count
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
-                this.color = `rgba(59, 130, 246, ${Math.random() * 0.5})`; // Blue-ish
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
-
-        const connectParticles = () => {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 150) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(59, 130, 246, ${1 - distance / 150})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        };
-
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
-
-            connectParticles();
-            animationFrameId = requestAnimationFrame(animate);
-        };
-
-        animate();
-
-        return () => {
-            window.removeEventListener('resize', resizeCanvas);
-            cancelAnimationFrame(animationFrameId);
-        };
-    }, []);
-
     return (
-        <canvas
-            ref={canvasRef}
-            className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none bg-slate-950"
-        />
+        <div className="fixed inset-0 -z-20 w-full h-full bg-slate-950 overflow-hidden pointer-events-none">
+            {/* Elegant SVG grid pattern overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-60"></div>
+            
+            {/* Subtle, soft grid dots */}
+            <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:2rem_2rem] opacity-30"></div>
+
+            {/* Ambient Blur Glows - Fully hardware accelerated */}
+            <div className="absolute top-[10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-600/5 blur-[130px] animate-[pulse_10s_ease-in-out_infinite] pointer-events-none"></div>
+            <div className="absolute bottom-[10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-indigo-600/5 blur-[130px] animate-[pulse_8s_ease-in-out_infinite_delay-2s] pointer-events-none"></div>
+            <div className="absolute top-[40%] right-[20%] w-[35vw] h-[35vw] rounded-full bg-purple-600/3 blur-[120px] animate-[pulse_12s_ease-in-out_infinite_delay-1s] pointer-events-none"></div>
+            
+            {/* Top gradient highlight for page depth */}
+            <div className="absolute top-0 left-0 w-full h-[30vh] bg-gradient-to-b from-blue-950/20 via-transparent to-transparent pointer-events-none"></div>
+        </div>
     );
 };
 
